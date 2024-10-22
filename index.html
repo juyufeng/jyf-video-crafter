@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JyfVideoCrafter 示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            margin-bottom: 20px;
+        }
+
+        video {
+            margin-top: 20px;
+            display: block;
+        }
+    </style>
+    <script src="JyfVideoCrafter.js"></script>
+</head>
+
+<body>
+    <h1>使用 JyfVideoCrafter 生成 WebM 视频</h1>
+    <p>每个帧都有不同颜色的矩形。</p>
+    <p>直接双击index.html页面,无法演示</p>
+    <div style="display: flex; flex-direction: column;width: 100%;align-items: center;justify-content: center;">
+        <!-- 画布，用于生成视频帧 -->
+        <canvas id="myCanvas" width="640" height="360"></canvas>
+        <br>
+        <a id="a">下载视频</a>
+        <br>
+        <video id="outputVideo" crossorigin="anonymous" controls style="width: 640px; height: 360px;"></video>
+    </div>
+    <script>
+        function test() {
+
+            const { JyfVideo } = JyfVideoCrafter;
+            const canvas = document.getElementById('myCanvas');
+            canvas.width = 640;
+            canvas.height = 360;
+
+            // 使用 willReadFrequently: true 优化性能
+            const context = canvas.getContext('2d', { willReadFrequently: true });
+            context.fillStyle = 'blue';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 创建视频对象，帧速率为 30fps，质量为 0.8
+            const video = new JyfVideo(30);
+            // 获取图像帧数据
+            const frame = canvas.toDataURL('image/webp');
+            console.log('frame data:', JSON.stringify(frame));
+            // 添加帧到视频中
+            for (let i = 0; i < 100; i++) {
+                video.add(frame);
+            }
+
+            // 编译视频
+            video.compile(false, function (webmBlob) {
+                // 检查生成的视频 Blob 是否有效
+                if (webmBlob && webmBlob.size > 0) {
+                    console.log('生成的 Blob:', webmBlob);
+                    console.log('Blob 类型:', webmBlob.type);
+                    console.log('Blob 大小:', webmBlob.size);
+
+                    const url = window.URL.createObjectURL(webmBlob);  // 将生成的视频转换为 URL
+                    console.log('生成的 url:', url);
+
+
+                    // 创建下载链接
+                    const a = document.getElementById('a');
+                    a.href = url;
+                    a.download = 'output.webm';
+                    a.textContent = '下载视频';
+                    document.body.appendChild(a);
+
+                    const videoElement = document.getElementById('outputVideo');
+                    videoElement.src = url;
+                    videoElement.style.display = 'block';  // 显示视频
+
+                    // 监听视频加载完成事件
+                    videoElement.addEventListener('loadeddata', () => {
+                        console.log('视频已准备好播放');
+                    });
+                    // 释放 Blob URL
+                    videoElement.addEventListener('ended', () => {
+                        URL.revokeObjectURL(url);
+                        console.log('释放 Blob URL:', url);
+                    });
+                } else {
+                    console.error('视频生成失败或 Blob 为空');
+                }
+            }, function (err) {
+                console.error('视频编译过程中的错误:', err);  // 捕获编译过程中的任何错误
+            });
+
+
+        }
+        test();
+
+    </script>
+
+</body>
+
+</html>
