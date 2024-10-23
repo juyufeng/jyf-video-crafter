@@ -16,6 +16,12 @@
   }
 })(this, () => {
   'use strict';
+
+  if (typeof _typeof !== 'function') {
+    function _typeof(obj) {
+      return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+    }
+  }
  
   function toWebM(frames, outputAsArray) {
     var info = checkFrames(frames);

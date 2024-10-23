@@ -1,8 +1,8 @@
 "use strict";
 
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof2(o); }
 (function (global, factory) {
-  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object' && typeof module !== 'undefined') {
+  if ((typeof exports === "undefined" ? "undefined" : _typeof2(exports)) === 'object' && typeof module !== 'undefined') {
     // CommonJS
     var moduleJyfVideoCrafter = require("JyfVideoCrafter");
     modules.exports = factory(moduleJyfVideoCrafter);
@@ -17,6 +17,11 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 })(void 0, function () {
   'use strict';
 
+  if (typeof _typeof !== 'function') {
+    var _typeof3 = function _typeof3(obj) {
+      return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+    };
+  }
   function toWebM(frames, outputAsArray) {
     var info = checkFrames(frames);
 
@@ -264,7 +269,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         continue;
       }
       var data = json[i].data;
-      if (_typeof(data) == 'object') data = generateEBML(data, outputAsArray);
+      if (_typeof2(data) == 'object') data = generateEBML(data, outputAsArray);
       if (typeof data == 'number') data = 'size' in json[i] ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
       if (typeof data == 'string') data = strToBuffer(data);
       if (data.length) {
@@ -301,7 +306,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       outBuffer = [];
     }
     for (var i = 0; i < arr.length; i++) {
-      if (_typeof(arr[i]) == 'object') {
+      if (_typeof2(arr[i]) == 'object') {
         //an array
         toFlatArray(arr[i], outBuffer);
       } else {

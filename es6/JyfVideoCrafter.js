@@ -1,5 +1,10 @@
 
 
+  if (typeof _typeof !== 'function') {
+    var _typeof3 = function _typeof3(obj) {
+      return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+    };
+  }
   function toWebM(frames, outputAsArray) {
     var info = checkFrames(frames);
 
@@ -247,7 +252,7 @@
         continue;
       }
       var data = json[i].data;
-      if (_typeof(data) == 'object') data = generateEBML(data, outputAsArray);
+      if (_typeof2(data) == 'object') data = generateEBML(data, outputAsArray);
       if (typeof data == 'number') data = 'size' in json[i] ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
       if (typeof data == 'string') data = strToBuffer(data);
       if (data.length) {
@@ -284,7 +289,7 @@
       outBuffer = [];
     }
     for (var i = 0; i < arr.length; i++) {
-      if (_typeof(arr[i]) == 'object') {
+      if (_typeof2(arr[i]) == 'object') {
         //an array
         toFlatArray(arr[i], outBuffer);
       } else {
