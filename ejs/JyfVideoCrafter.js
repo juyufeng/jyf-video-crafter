@@ -1,8 +1,8 @@
 "use strict";
 
-function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof2(o); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 (function (global, factory) {
-  if ((typeof exports === "undefined" ? "undefined" : _typeof2(exports)) === 'object' && typeof module !== 'undefined') {
+  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object' && typeof module !== 'undefined') {
     // CommonJS
     var moduleJyfVideoCrafter = require("JyfVideoCrafter");
     modules.exports = factory(moduleJyfVideoCrafter);
@@ -17,10 +17,8 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
 })(void 0, function () {
   'use strict';
 
-  if (typeof _typeof !== 'function') {
-    var _typeof3 = function _typeof3(obj) {
-      return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-    };
+  function getObjectType(value) {
+    return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
   }
   function toWebM(frames, outputAsArray) {
     var info = checkFrames(frames);
@@ -269,9 +267,9 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
         continue;
       }
       var data = json[i].data;
-      if (_typeof2(data) == 'object') data = generateEBML(data, outputAsArray);
-      if (typeof data == 'number') data = 'size' in json[i] ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
-      if (typeof data == 'string') data = strToBuffer(data);
+      if (getObjectType(data) == 'object') data = generateEBML(data, outputAsArray);
+      if (getObjectType(data) == 'number') data = 'size' in json[i] ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
+      if (getObjectType(data) == 'string') data = strToBuffer(data);
       if (data.length) {
         var z = z;
       }
@@ -306,7 +304,7 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
       outBuffer = [];
     }
     for (var i = 0; i < arr.length; i++) {
-      if (_typeof2(arr[i]) == 'object') {
+      if (getObjectType(arr[i]) == 'object') {
         //an array
         toFlatArray(arr[i], outBuffer);
       } else {
@@ -401,10 +399,10 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
       // frame = frame.toDataURL('image/webp', this.quality);
       // quickly store image data so we don't block cpu. encode in compile method.
       frame = frame.getContext('2d').getImageData(0, 0, frame.width, frame.height);
-    } else if (typeof frame != "string") {
+    } else if (getObjectType(frame) != "string") {
       throw "frame must be a a HTMLCanvasElement, a CanvasRenderingContext2D or a DataURI formatted string";
     }
-    if (typeof frame === "string" && !/^data:image\/webp;base64,/ig.test(frame)) {
+    if (getObjectType(frame) === "string" && !/^data:image\/webp;base64,/ig.test(frame)) {
       throw "Input must be formatted properly as a base64 encoded DataURI of type image/webp";
     }
     this.frames.push({

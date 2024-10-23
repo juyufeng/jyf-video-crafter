@@ -17,10 +17,8 @@
 })(this, () => {
   'use strict';
 
-  if (typeof _typeof !== 'function') {
-    function _typeof(obj) {
-      return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-    }
+  function getObjectType(value) {
+    return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
   }
  
   function toWebM(frames, outputAsArray) {
@@ -313,9 +311,9 @@
       }
 
       var data = json[i].data;
-      if (typeof data == 'object') data = generateEBML(data, outputAsArray);
-      if (typeof data == 'number') data = ('size' in json[i]) ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
-      if (typeof data == 'string') data = strToBuffer(data);
+      if (getObjectType(data) == 'object') data = generateEBML(data, outputAsArray);
+      if (getObjectType(data) == 'number') data = ('size' in json[i]) ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
+      if (getObjectType(data) == 'string') data = strToBuffer(data);
 
       if (data.length) {
         var z = z;
@@ -353,7 +351,7 @@
       outBuffer = [];
     }
     for (var i = 0; i < arr.length; i++) {
-      if (typeof arr[i] == 'object') {
+      if (getObjectType(arr[i]) == 'object') {
         //an array
         toFlatArray(arr[i], outBuffer)
       } else {
@@ -459,10 +457,10 @@
       // frame = frame.toDataURL('image/webp', this.quality);
       // quickly store image data so we don't block cpu. encode in compile method.
       frame = frame.getContext('2d').getImageData(0, 0, frame.width, frame.height);
-    } else if (typeof frame != "string") {
+    } else if (getObjectType(frame) != "string") {
       throw "frame must be a a HTMLCanvasElement, a CanvasRenderingContext2D or a DataURI formatted string"
     }
-    if (typeof frame === "string" && !(/^data:image\/webp;base64,/ig).test(frame)) {
+    if (getObjectType(frame) === "string" && !(/^data:image\/webp;base64,/ig).test(frame)) {
       throw "Input must be formatted properly as a base64 encoded DataURI of type image/webp";
     }
     this.frames.push({
