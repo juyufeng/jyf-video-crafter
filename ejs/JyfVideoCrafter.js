@@ -17,8 +17,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 })(void 0, function () {
   'use strict';
 
-  function getObjectType(value) {
-    return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
+  function kksTp(value) {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return value.constructor.name.toLowerCase();
   }
   function toWebM(frames, outputAsArray) {
     var info = checkFrames(frames);
@@ -267,9 +269,9 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         continue;
       }
       var data = json[i].data;
-      if (getObjectType(data) == 'object') data = generateEBML(data, outputAsArray);
-      if (getObjectType(data) == 'number') data = 'size' in json[i] ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
-      if (getObjectType(data) == 'string') data = strToBuffer(data);
+      if (kksTp(data) == 'object') data = generateEBML(data, outputAsArray);
+      if (kksTp(data) == 'number') data = 'size' in json[i] ? numToFixedBuffer(data, json[i].size) : bitsToBuffer(data.toString(2));
+      if (kksTp(data) == 'string') data = strToBuffer(data);
       if (data.length) {
         var z = z;
       }
@@ -304,7 +306,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       outBuffer = [];
     }
     for (var i = 0; i < arr.length; i++) {
-      if (getObjectType(arr[i]) == 'object') {
+      if (kksTp(arr[i]) == 'object') {
         //an array
         toFlatArray(arr[i], outBuffer);
       } else {
@@ -399,10 +401,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       // frame = frame.toDataURL('image/webp', this.quality);
       // quickly store image data so we don't block cpu. encode in compile method.
       frame = frame.getContext('2d').getImageData(0, 0, frame.width, frame.height);
-    } else if (getObjectType(frame) != "string") {
+    } else if (kksTp(frame) != "string") {
       throw "frame must be a a HTMLCanvasElement, a CanvasRenderingContext2D or a DataURI formatted string";
     }
-    if (getObjectType(frame) === "string" && !/^data:image\/webp;base64,/ig.test(frame)) {
+    if (kksTp(frame) === "string" && !/^data:image\/webp;base64,/ig.test(frame)) {
       throw "Input must be formatted properly as a base64 encoded DataURI of type image/webp";
     }
     this.frames.push({
