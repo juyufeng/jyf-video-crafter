@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0",
+  "version": "3.0.2",
   "name": "jyf-video-crafter",
   "description": "jyf-video-crafter is a powerful and easy-to-use JavaScript library designed to help developers integrate advanced video processing capabilities into their web applications. ",
   "url": "https://github.com/juyufeng/jyf-video-crafter",
@@ -36,6 +36,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@babel/core": "^7.25.2",
+    "@babel/helpers": "^7.25.9",
     "@babel/preset-env": "^7.25.4",
     "chalk": "2.4.2",
     "fs": "^0.0.1-security",
