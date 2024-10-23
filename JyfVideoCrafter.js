@@ -446,8 +446,6 @@
   }
 
   JyfVideo.prototype.add = function (frame, duration) {
-    if (this.duration) throw "you can't pass a duration if the fps is set";
-    if (!this.duration) throw "if you don't have the fps set, you need to have durations here.";
     if (frame.canvas) { //CanvasRenderingContext2D
       frame = frame.canvas;
     }
