@@ -410,7 +410,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     });
   };
 
-  // 延迟的 WebP 编码。将图像数据绘制到画布上，然后编码为数据 URL。
+  // 延迟的 WebP 编码。将图像数据绘制到画布上，然后编码为数据 URL
   JyfVideo.prototype.encodeFrames = function (callback) {
     if (this.frames[0].image instanceof ImageData) {
       var frames = this.frames;
@@ -452,33 +452,35 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   var JyfVideoCrafter = {
     JyfVideo: JyfVideo,
     // Integrate JyfVideo class for generating WebM videos
+    fromImageArray: function fromImageArray(images, fps, outputAsArray) {
+      return toWebM(images.map(function (image) {
+        var webp = parseWebP(parseRIFF(atob(image.slice(23))));
+        webp.duration = 1000 / fps;
+        return webp;
+      }), outputAsArray);
+    },
     // 集成 JyfVideo 类，用于生成 WebM 视频
-    toWebM: toWebM,
-    // Integrate toWebM function to convert frames into WebM format
+    toWebM: toWebM // Integrate toWebM function to convert frames into WebM format
     // 集成 toWebM 函数，用于将帧转换为 WebM 格式
 
+    /*以后做
     // Video processing functionalities
-    // 视频处理功能
-    mergeClips: mergeClips,
-    // Merge multiple video clips into one
-    // 将多个视频片段合并
-    adjustSpeed: adjustSpeed,
-    // Adjust the playback speed of the video
-    // 调整视频的播放速度
-
-    // Audio processing functionalities
-    // 音频处理功能
-    syncAudio: syncAudio,
-    // Synchronize audio with the video
-    // 同步音频到视频中
-    addAudioToVideo: addAudioToVideo,
-    // Add audio to a video file
-    // 将音频添加到视频文件
-
-    // Browser compatibility check
-    // 浏览器兼容性处理
-    isBrowserSupported: isBrowserSupported // Check if the browser supports video functionalities
-    // 检测浏览器是否支持视频处理功能
+     // 视频处理功能
+     mergeClips,   // Merge multiple video clips into one
+     // 将多个视频片段合并
+     adjustSpeed,  // Adjust the playback speed of the video
+     // 调整视频的播放速度
+      // Audio processing functionalities
+     // 音频处理功能
+     syncAudio,    // Synchronize audio with the video
+     // 同步音频到视频中
+     addAudioToVideo,  // Add audio to a video file
+     // 将音频添加到视频文件
+      // Browser compatibility check
+     // 浏览器兼容性处理
+     isBrowserSupported,  // Check if the browser supports video functionalities
+     // 检测浏览器是否支持视频处理功能
+     */
   };
   return JyfVideoCrafter;
 });
